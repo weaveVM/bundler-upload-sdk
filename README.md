@@ -5,13 +5,13 @@ A JavaScript SDK for interacting with the Bundler upload service.
 ## Installation
 
 ```bash
-npm install bundler-sdk
+npm install bundler-upload-sdk
 ```
 
 ## Usage
 
 ```javascript
-import { BundlerSDK } from 'bundler-sdk';
+import { BundlerSDK } from 'bundler-upload-sdk';
 
 // Initialize the SDK with your endpoint and API key
 const bundler = new BundlerSDK('https://your-api-endpoint', 'your-api-key');
