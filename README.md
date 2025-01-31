@@ -14,23 +14,43 @@ npm install bundler-upload-sdk
 import { BundlerSDK } from 'bundler-upload-sdk';
 
 // Initialize the SDK with your endpoint and API key
-const bundler = new BundlerSDK('https://your-api-endpoint', 'your-api-key');
+const bundler = new BundlerSDK('http://127.0.0.1:8000', 'your-api-key');
 
-// Upload a file without tags
+// Upload multiple files with their associated tags
 try {
-  const txHash = await bundler.upload(fileBuffer);
+  const txHash = await bundler.upload([
+    {
+      file: paperFileBuffer,
+      tags: {
+        'content-type': 'text/plain',
+        'filename': 'paper.txt'
+      }
+    },
+    {
+      file: woodFileBuffer,
+      tags: {
+        'content-type': 'text/plain',
+        'filename': 'wood.txt'
+      }
+    }
+  ]);
   console.log('Upload successful! Transaction hash:', txHash);
 } catch (error) {
   console.error('Upload failed:', error.message);
 }
 
-// Upload a file with tags
+// Upload a single file with tags
 try {
-  const txHash = await bundler.upload(fileBuffer, {
-    contentType: 'image/jpeg',
-    category: 'photos',
-    userId: '123'
-  });
+  const txHash = await bundler.upload([
+    {
+      file: fileBuffer,
+      tags: {
+        'content-type': 'image/jpeg',
+        'category': 'photos',
+        'userId': '123'
+      }
+    }
+  ]);
   console.log('Upload successful! Transaction hash:', txHash);
 } catch (error) {
   console.error('Upload failed:', error.message);
@@ -46,19 +66,33 @@ Creates a new BundlerSDK instance.
 - `endpoint` (string): The API endpoint URL
 - `apiKey` (string): The API key for authentication
 
-### `upload(file, tags?)`
+### `upload(uploads)`
 
-Uploads a file with optional tags.
+Uploads one or more files with their associated tags.
 
-- `file` (Buffer|Blob|File): The file to upload
-- `tags` (Object, optional): Key-value pairs of tags to attach to the file
+- `uploads` (Array): An array of upload objects, each containing:
+  - `file` (Buffer|Blob|File): The file to upload
+  - `tags` (Object, optional): Key-value pairs of tags to attach to the file
 - Returns: Promise<string> - Resolves with the transaction hash
 - Throws: Error if the upload fails or network error occurs
+
+Example curl command equivalent to the SDK usage:
+```bash
+curl -X POST http://127.0.0.1:8000/upload \
+  -H "Authorization: your-api-key" \
+  -F "file=@paper.txt" \
+  -F "tag_content-type=text/plain" \
+  -F "tag_filename=paper.txt" \
+  -F "file=@wood.txt" \
+  -F "tag_content-type=text/plain" \
+  -F "tag_filename=wood.txt"
+```
 
 ## Error Handling
 
 The SDK throws errors in the following cases:
-- Missing required parameters (endpoint, apiKey, file)
+- Missing required parameters (endpoint, apiKey)
+- Empty uploads array or missing files
 - Network errors during upload
 - Server errors (non-200 responses)
 - Invalid or missing API key

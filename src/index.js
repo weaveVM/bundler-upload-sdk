@@ -16,23 +16,31 @@ export class BundlerSDK {
   }
 
   /**
-   * Upload a file with optional tags
-   * @param {Buffer|Blob|File} file - The file to upload
-   * @param {Object} [tags] - Optional key-value pairs of tags
+   * Upload one or more files with their associated tags
+   * @param {Array<{file: Buffer|Blob|File, tags: Object}>} uploads - Array of file uploads with their tags
    * @returns {Promise<string>} Transaction hash
    * @throws {Error} If the upload fails
    */
-  async upload(file, tags = {}) {
-    if (!file) {
-      throw new Error('File is required');
+  async upload(uploads) {
+    if (!Array.isArray(uploads) || uploads.length === 0) {
+      throw new Error('At least one file upload is required');
     }
 
     const formData = new FormData();
-    formData.append('file', file);
 
-    // Add tags with 'tag_' prefix
-    for (const [key, value] of Object.entries(tags)) {
-      formData.append(`tag_${key}`, value.toString());
+    // Add each file and its associated tags
+    for (const upload of uploads) {
+      if (!upload.file) {
+        throw new Error('File is required for each upload');
+      }
+
+      formData.append('file', upload.file);
+
+      // Add tags with 'tag_' prefix for this file
+      const tags = upload.tags || {};
+      for (const [key, value] of Object.entries(tags)) {
+        formData.append(`tag_${key}`, value.toString());
+      }
     }
 
     try {
