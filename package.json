@@ -1,0 +1,21 @@
+{
+  "name": "bundler-sdk",
+  "version": "1.0.0",
+  "description": "JavaScript SDK for interacting with the Bundler upload service",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["bundler", "sdk", "upload", "multipart", "file-upload"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "node-fetch": "^3.3.2"
+  }
+}
