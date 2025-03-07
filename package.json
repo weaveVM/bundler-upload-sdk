@@ -1,6 +1,6 @@
 {
   "name": "bundler-upload-sdk",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "JavaScript SDK for interacting with the Bundler upload service",
   "main": "src/index.js",
   "types": "src/index.d.ts",
