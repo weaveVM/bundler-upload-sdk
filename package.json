@@ -3,12 +3,22 @@
   "version": "1.0.0",
   "description": "JavaScript SDK for interacting with the Bundler upload service",
   "main": "src/index.js",
+  "browser": "src/browser.js",
   "types": "src/index.d.ts",
   "type": "module",
   "files": [
     "src",
+    "examples",
     "README.md"
   ],
+  "exports": {
+    ".": {
+      "node": "./src/index.js",
+      "browser": "./src/browser.js",
+      "default": "./src/index.js"
+    },
+    "./browser": "./src/browser.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
