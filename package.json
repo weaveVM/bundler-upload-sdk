@@ -1,22 +1,37 @@
 {
-  "name": "bundler-upload-sdk",
-  "version": "2.1.0",
-  "description": "JavaScript SDK for interacting with the Bundler upload service",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
-  "type": "module",
-  "files": [
-    "src",
-    "README.md"
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["bundler", "sdk", "upload", "multipart", "file-upload"],
-  "author": "xylophonez",
-  "license": "MIT",
-  "dependencies": {
-    "form-data": "^4.0.0",
-    "node-fetch": "^3.3.2"
-  }
+	"name": "bundler-upload-sdk",
+	"version": "2.1.0",
+	"description": "JavaScript SDK for interacting with the Bundler upload service",
+	"main": "src/index.js",
+	"browser": "src/browser.js",
+	"types": "src/index.d.ts",
+	"type": "module",
+	"files": [
+		"src",
+		"README.md"
+	],
+	"exports": {
+		".": {
+			"node": "./src/index.js",
+			"browser": "./src/browser.js",
+			"default": "./src/index.js"
+		},
+		"./browser": "./src/browser.js"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"bundler",
+		"sdk",
+		"upload",
+		"multipart",
+		"file-upload"
+	],
+	"author": "xylophonez",
+	"license": "MIT",
+	"dependencies": {
+		"form-data": "^4.0.0",
+		"node-fetch": "^3.3.2"
+	}
 }
